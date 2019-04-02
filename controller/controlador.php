@@ -18,7 +18,7 @@ class Controlador
 
 	public function listar()
 	{
-		$datos = $this->con->rawQuery('SELECT * FROM registro order by id');
+		$datos = $this->con->rawQuery("SELECT registro.*, concat(coordinador.apellido,' ' ,coordinador.nombre) responsable FROM registro left join coordinador on registro.responsable_id = coordinador.id  order by  apellido_paterno, apellido_materno, nombres  ");
 		return $datos;
 	}
 
@@ -41,7 +41,7 @@ class Controlador
 	public function guardar($data)
 	{
 		$this->con->rawQuery("INSERT INTO registro 
-				(cedula,apellido_paterno,apellido_materno,nombres,profesion,telefono,edad,responsable) 
+				(cedula,apellido_paterno,apellido_materno,nombres,profesion,telefono,edad,responsable_id) 
 				values (?,?,?,?,?,?,?,?)
 			",[
 				$data['cedula'],
@@ -76,7 +76,7 @@ class Controlador
 	public function editar($data)
 	{
 		$this->con->rawQuery("UPDATE registro 
-				SET cedula = ?,apellido_paterno = ?  ,apellido_materno = ?,nombres = ?,profesion =? ,telefono = ?,edad = ?, responsable = ? WHERE id = ? 
+				SET cedula = ?,apellido_paterno = ?  ,apellido_materno = ?,nombres = ?,profesion =? ,telefono = ?,edad = ?, responsable_id = ? WHERE id = ? 
 			",[
 				$data['cedula'],
 				$data['apellido_paterno'],

@@ -12,8 +12,11 @@ class Conexion extends MysqliDb
 	{
 		$parametros = [
 			'host' => 'localhost',
+			// 'username' => 'thejlmed',
 			'username' => 'root',
+			// 'password' => 'Jlvb5jorgeluis.',
 			'password' => '',
+			// 'db' => 'thejlmed_registro',
 			'db' => 'registro',
 		];
 

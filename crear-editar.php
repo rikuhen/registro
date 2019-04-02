@@ -4,6 +4,7 @@
 	session_start();
 
 	require_once $_SERVER["DOCUMENT_ROOT"].'/controller/controlador.php';
+	require_once $_SERVER["DOCUMENT_ROOT"].'/controller/coordinador.php';
 
 	$controlador = new Controlador();
 
@@ -12,6 +13,9 @@
 	if (!$haySesion) {
 		header("Location: login.php");
 	}
+
+	$coordinador = new Coordinador();
+	$coordinadores = $coordinador->listar();
 
 	//sesion
 	$rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : null;
@@ -48,7 +52,7 @@
 		$profesion = $registro['profesion'];
 		$telefono = $registro['telefono'];
 		$edad = $registro['edad'];
-		$responsable = $registro['responsable'];
+		$responsable = $registro['responsable_id'];
 
 		$accion = "EDICIÓN DE";
 	}
@@ -78,7 +82,7 @@
 	<div class="container p-3">
 		<form action="controller/procesar.php" method="POST">
 			<div class="row">
-					<h1 class="text-center col-12"><?php echo $accion; ?> HOJAS DE VIDA GRUPO MARCELO ROBAYO</h1>
+					<h1 class="text-center col-12"><?php echo $accion; ?> GRUPO MARCELO ROBAYO</h1>
 					<?php if ($idEl): ?>
 					<input type="hidden" name="id" value="<?php echo $idEl; ?>">
 					<?php endif ?>
@@ -117,7 +121,12 @@
 
 					<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6 form-group">
 						<label for="edad">Responsable</label>
-						<input type="text" class="form-control" id="responsable" name="responsable" value="<?php echo $responsable; ?>" <?php echo $readonly ?>>
+						<select class="form-control" id="responsable" name="responsable">
+							<?php foreach ($coordinadores as $key => $value): ?>
+								<option value="<?php echo $value['id'] ?>" <?php ($value['id'] == $responsable) ?> <?php ?> selected ><?php echo $value['apellido'] .' '.$value['nombre'] ?></option>
+							<?php endforeach ?>
+						</select>
+						<!-- <input type="text"  value="<?php echo $responsable; ?>" <?php echo $readonly ?>> -->
 					</div>
 					
 					<div class="col-lg-1 col-md-4 col-sm-5 col-xs-6 form-group">
