@@ -121,9 +121,11 @@
 
 					<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6 form-group">
 						<label for="edad">Responsable</label>
+						<?php echo $responsable; ?>
 						<select class="form-control" id="responsable" name="responsable">
 							<?php foreach ($coordinadores as $key => $value): ?>
-								<option value="<?php echo $value['id'] ?>" <?php ($value['id'] == $responsable) ?> <?php ?> selected ><?php echo $value['apellido'] .' '.$value['nombre'] ?></option>
+								<option value="">--Seleccione--</option>
+								<option value="<?php echo $value['id'] ?>" <?php if($value['id'] == $responsable): ?> selected <?php endif; ?>  ><?php echo $value['apellido'] .' '.$value['nombre'] ?></option>
 							<?php endforeach ?>
 						</select>
 						<!-- <input type="text"  value="<?php echo $responsable; ?>" <?php echo $readonly ?>> -->
